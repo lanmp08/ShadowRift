@@ -3,6 +3,8 @@ import websockets
 import unittest
 import jwt
 
+SECRET_KEY = "your-secret-key"
+
 
 async def handle_connection(websocket, path):
     # Gerenciar a conexão do WebSocket aqui
@@ -66,7 +68,7 @@ class TestAuth(unittest.TestCase):
 
     async def test_auth(self):
         # Teste a autorização com um token JWT válido
-        token = jwt.encode({"user_id": 1}, "SECRET_KEY", algorithm="HS256")
+        token = jwt.encode({"user_id": 1}, SECRET_KEY, algorithm="HS256")
         async with websockets.connect("ws://localhost:8080") as websocket:
             await websocket.send(token)
             response = await websocket.recv()
