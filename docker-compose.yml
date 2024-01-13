@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - REDIS_URI=redis://redis:6379
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    build:
+      context: .
+      dockerfile: Dockerfile-mongodb
+    volumes:
+      - mongodb_data_container:/data/db
+
+  redis:
+    image: "redis:6.2"
+
+volumes:
+  mongodb_data_container:
